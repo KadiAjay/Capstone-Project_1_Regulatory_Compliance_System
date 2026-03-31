@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-# from src.api.v1.routes.query import router as query_router
+from src.api.v1.routes.query import router as query_router
 from src.api.v1.routes.upload import router as upload_router
 
 
@@ -20,7 +20,7 @@ app.add_middleware(
 )
 
 
-# app.include_router(query_router, prefix="/api/v1", tags=["Query"])
+app.include_router(query_router, prefix="/api/v1", tags=["Query"])
 app.include_router(upload_router, prefix="/api/v1", tags=["Upload"])
 
 
