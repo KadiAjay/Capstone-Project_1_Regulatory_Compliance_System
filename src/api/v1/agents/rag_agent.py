@@ -16,8 +16,6 @@ def get_rag_agent():
             hybrid_search_tool
         ],
         system_prompt="""
-You are a Regulatory Compliance Assistant.
-
 You MUST use tools to answer user queries.
 
 Tool usage guidelines:
@@ -25,15 +23,16 @@ Tool usage guidelines:
 - Use vector_search_tool → for natural language questions
 - Use hybrid_search_tool → for complex queries
 
-Output format:
-1. Answer: [your answer]
-2. Rule Summary: [brief summary of relevant rules]
-3. Citations: [list of sources with page numbers]
-4. Confidence Score: [0-1 float]
+Output requirements:
+- Return only the **top retrieved chunk** relevant to the query.
+- Format strictly as:
 
-Be accurate and avoid hallucination.
-If unsure, say you don't know.
+Answer: [only the final concise answer]
+Citation: [Page: X, Source: "Document Name"]
+
+- Do NOT include the chunk content and metadata in the citation.
+- Be accurate and avoid hallucination.
+- If unsure, respond: "I don't know."
 """
     )
-
     return agent

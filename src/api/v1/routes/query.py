@@ -9,5 +9,5 @@ def query_endpoint(request: QueryRequest):
     return generate_answer(
         query=request.query,
         regulation_type=request.regulation_type,
-        # include_full_text=request.include_full_text
+       
     )

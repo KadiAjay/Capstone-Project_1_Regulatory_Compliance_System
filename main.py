@@ -5,6 +5,7 @@ from src.api.v1.routes.query import router as query_router
 from src.api.v1.routes.upload import router as upload_router
 
 
+
 app = FastAPI(
     title="Regulatory Compliance Intelligence System",
     description="Agentic RAG system for regulatory queries",

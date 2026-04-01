@@ -3,23 +3,16 @@ import requests
 
 BASE_URL = "http://localhost:8000/api/v1"
 
-st.set_page_config(page_title="Regulatory Compliance Assistant")
 
-st.title("📊 Regulatory Compliance Intelligence System")
 
-# =======================
-# 📤 Upload Section
-# =======================
-st.header("Upload Document")
+st.set_page_config(page_title="Regulatory Compliance Assistant", layout="wide")
 
-uploaded_file = st.file_uploader("Upload PDF or TXT", type=["pdf", "txt"])
 
-regulation_type = st.selectbox(
-    "Select Regulation Type",
-    ["RBI", "SEBI", "Basel", "Internal"]
-)
+st.sidebar.header("📤 Upload Document")
 
-if st.button("Upload"):
+uploaded_file = st.sidebar.file_uploader("Upload PDF or TXT", type=["pdf", "txt"])
+
+if st.sidebar.button("Upload"):
     if uploaded_file is not None:
 
         files = {
@@ -27,7 +20,7 @@ if st.button("Upload"):
         }
 
         data = {
-            "regulation_type": regulation_type
+            "regulation_type": None
         }
 
         response = requests.post(
@@ -37,36 +30,28 @@ if st.button("Upload"):
         )
 
         if response.status_code == 200:
-            st.success("✅ File uploaded and processed successfully!")
-            st.json(response.json())
+            st.sidebar.success(" File uploaded and processed successfully!")
+            st.sidebar.json(response.json())
         else:
-            st.error("❌ Upload failed")
-            st.text(response.text)
+            st.sidebar.error(" Upload failed")
+            st.sidebar.text(response.text)
 
     else:
-        st.warning("Please upload a file")
+        st.sidebar.warning("Please upload a file")
 
-# =======================
-# 🔍 Query Section
-# =======================
+
+st.title("Regulatory Compliance Intelligence System")
+
 st.header("Ask a Question")
 
-query = st.text_input("Enter your question")
-
-filter_regulation = st.selectbox(
-    "Filter by Regulation (optional)",
-    ["None", "RBI", "SEBI", "Basel", "Internal"]
-)
-
-
+query = st.text_area("Enter your question here", height=120)
 
 if st.button("Submit Query"):
     if query:
 
         payload = {
             "query": query,
-            "regulation_type": None if filter_regulation == "None" else filter_regulation,
-           
+            "regulation_type": None,
         }
 
         response = requests.post(
@@ -77,24 +62,11 @@ if st.button("Submit Query"):
         if response.status_code == 200:
             data = response.json()
 
-            st.subheader("📌 Answer")
-            st.write(data["answer"])
-
-            st.subheader("📊 Rule Summary")
-            st.write(data["rule_summary"])
-
-            st.subheader("📈 Confidence Score")
-            st.write(data["confidence_score"])
-
-            st.subheader("📚 Citations")
-            for c in data["citations"]:
-                st.write(f"- {c['content'][:200]}...")
-
-            st.warning(data["disclaimer"])
+            st.subheader(" Answer")
+            st.write(data.get("answer", "No answer returned."))
 
         else:
-            st.error("❌ Query failed")
+            st.error(" Query failed")
             st.text(response.text)
-
     else:
         st.warning("Please enter a question")
