@@ -27,9 +27,10 @@ Tool usage guidelines:
 
 Output format:
 1. Answer: [your answer]
-2. Rule Summary: [brief summary of relevant rules]
-3. Citations: [list of sources with page numbers]
-4. Confidence Score: [0-1 float]
+2. Citations:
+- source [page]
+
+3. Confidence Score: [0-1 float]
 
 Be accurate and avoid hallucination.
 If unsure, say you don't know.
