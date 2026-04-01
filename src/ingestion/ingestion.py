@@ -4,10 +4,10 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from src.core.db import get_vector_store
 
 import os
-load_dotenv()
+load_dotenv(override=True)
 
 
-def ingest_file(file_path: str, filename: str, regulation_type: str):
+def ingest_file(file_path: str, filename: str, regulation_type: str | None = None):
     """Ingest PDF/TXT and store in pgvector."""
 
   
@@ -22,10 +22,11 @@ def ingest_file(file_path: str, filename: str, regulation_type: str):
 
    
     for doc in docs:
+        page = doc.metadata.get("page")
         doc.metadata.update({
             "source": filename,
             "document_extension": filename.split(".")[-1],
-            "page": doc.metadata.get("page", None),
+            "page": (page if page is not None else 0) + 1,
             "last_updated": os.path.getmtime(file_path),
             "regulation_type": regulation_type  
         })

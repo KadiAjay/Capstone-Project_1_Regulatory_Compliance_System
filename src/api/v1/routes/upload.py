@@ -13,7 +13,7 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 @router.post("/admin/upload")
 async def upload_file(
     file: UploadFile = File(...),
-    regulation_type: str = Form(...)
+    regulation_type: str | None = Form(None)
 ):
     
    
