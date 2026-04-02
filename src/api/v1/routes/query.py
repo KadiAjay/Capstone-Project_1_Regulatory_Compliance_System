@@ -8,6 +8,6 @@ router = APIRouter()
 def query_endpoint(request: QueryRequest):
     return generate_answer(
         query=request.query,
-        regulation_type=request.regulation_type,
+        regulation_type=request.regulation_type
        
     )

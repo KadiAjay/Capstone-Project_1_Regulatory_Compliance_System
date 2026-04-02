@@ -52,4 +52,4 @@ def hybrid_search_tool(query: str) -> str:
     if not results:
         return "No hybrid results found."
 
-    return "\n\n".join([f"{doc.page_content}\nMetadata: {doc.metadata}" for doc in results])
+    return "\n\n".join([f"{doc['content']}\nMetadata: {doc['metadata']}" for doc in results])

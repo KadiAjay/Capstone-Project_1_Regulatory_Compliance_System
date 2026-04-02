@@ -16,7 +16,7 @@ def fts_search_tool(query: str) -> str:
     if not results:
         return "No keyword matches found."
 
-    return "\n\n".join([f"{doc.page_content}\nMetadata: {doc.metadata}" for doc in results])
+    return "\n\n".join([f"{doc['content']}\nMetadata: {doc['metadata']}" for doc in results])
 
 
 

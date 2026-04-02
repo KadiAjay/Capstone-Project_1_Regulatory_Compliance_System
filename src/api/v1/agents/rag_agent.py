@@ -17,6 +17,7 @@ def get_rag_agent():
         ],
         system_prompt="""
 You MUST use tools to answer user queries.
+Query contains the regulation-type for efficient searching
 
 Tool usage guidelines:
 - Use fts_search_tool → for short keyword queries
@@ -27,8 +28,8 @@ Output requirements:
 - Return only the **top retrieved chunk** relevant to the query.
 - Format strictly as:
 
-Answer: [only the final concise answer]
-Citation: [Page: X, Source: "Document Name"]
+[only the final concise answer]
+[Page: X]] [Source: "Document Name"]
 
 - Do NOT include the chunk content and metadata in the citation.
 - Be accurate and avoid hallucination.

@@ -1,11 +1,12 @@
 from src.api.v1.agents.rag_agent import get_rag_agent
 
 
-def generate_answer(query: str, regulation_type=None):
+def generate_answer(query: str, regulation_type= None):
     agent = get_rag_agent()
 
     response = agent.invoke({
-        "messages": [{"role": "user", "content": query}]
+        "messages": [{"role": "user", "content": query}],
+        
     })
 
     # Extract final response text
@@ -14,5 +15,6 @@ def generate_answer(query: str, regulation_type=None):
 
     return {
         "query": query,
-        "answer": final_text
+        "answer": final_text,
+        "raw_output":response
     }

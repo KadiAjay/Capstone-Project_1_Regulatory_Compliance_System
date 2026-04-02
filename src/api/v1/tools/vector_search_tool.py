@@ -3,7 +3,7 @@ from src.core.db import get_vector_store
 
 
 @tool
-def vector_search_tool(query: str, regulation_type: str = None) -> str:
+def vector_search_tool(query: str, regulation_type: None) -> str:
     """Semantic search using pgvector."""
 
     vector_store = get_vector_store()
