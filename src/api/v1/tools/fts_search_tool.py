@@ -16,31 +16,21 @@ def fts_search_tool(query: str) -> str:
     if not results:
         return "No keyword matches found."
 
-    formatted_results = []
-    for r in results:
-        metadata = r["metadata"]
-        source = metadata.get("source", "unknown")
-        page = metadata.get("page", "unknown")
-        if page is None:
-            page = "unknown"
-        content = r["content"]
-        formatted_results.append(f"Source: {source} - Page: {page}\nContent: {content}")
-
-    return "\n\n".join(formatted_results)
+    return "\n\n".join([f"{doc['content']}\nMetadata: {doc['metadata']}" for doc in results])
 
 
 
 
-def fts_search(query: str, k: int = 5, collection_name: str = "hr_support_desk"):
+def fts_search(query: str, k: int = 5, collection_name: str = "regulatory-compilance"):
 
     sql =  """
        SELECT
-           e.document                                               AS content,
-           e.cmetadata                                              AS metadata,
+           e.document AS content,
+           e.cmetadata AS metadata,
            ts_rank(
                to_tsvector('english', e.document),
                plainto_tsquery('english', %(query)s)
-           )                                                        AS fts_rank
+           ) AS fts_rank
        FROM  langchain_pg_embedding  e
        JOIN  langchain_pg_collection c ON c.uuid = e.collection_id
        WHERE c.name = %(collection)s

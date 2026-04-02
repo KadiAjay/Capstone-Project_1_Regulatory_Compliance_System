@@ -16,12 +16,7 @@ class QueryRequest(BaseModel):
         description="Filter by regulation type"
     )
 
-    # include_full_text: Optional[bool] = Field(
-    #     default=False,
-    #     description="Include full retrieved text in response"
-    # )
-
-
+  
 
 
 class Citation(BaseModel):
@@ -33,8 +28,5 @@ class Citation(BaseModel):
 
 class QueryResponse(BaseModel):
     query: str
-    answer: str
-    citations: List[Citation]
-    rule_summary: str
-    confidence_score: float
-    disclaimer: str
+    answer:str
+    citations:list[Citation]

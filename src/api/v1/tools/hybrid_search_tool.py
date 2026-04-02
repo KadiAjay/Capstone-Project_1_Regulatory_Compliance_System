@@ -52,14 +52,4 @@ def hybrid_search_tool(query: str) -> str:
     if not results:
         return "No hybrid results found."
 
-    formatted_results = []
-    for r in results:
-        metadata = r["metadata"]
-        source = metadata.get("source", "unknown")
-        page = metadata.get("page", "unknown")
-        if page is None:
-            page = "unknown"
-        content = r["content"]
-        formatted_results.append(f"Source: {source} - Page: {page}\nContent: {content}")
-
-    return "\n\n".join(formatted_results)
+    return "\n\n".join([f"{doc['content']}\nMetadata: {doc['metadata']}" for doc in results])

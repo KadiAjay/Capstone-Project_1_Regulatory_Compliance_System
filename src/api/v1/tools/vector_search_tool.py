@@ -8,6 +8,7 @@ def vector_search_tool(query: str, regulation_type: str = None) -> str:
 
     vector_store = get_vector_store()
 
+
     if regulation_type:
         docs = vector_store.similarity_search(
             query,
@@ -20,13 +21,4 @@ def vector_search_tool(query: str, regulation_type: str = None) -> str:
     if not docs:
         return "No relevant documents found."
 
-    results = []
-    for doc in docs:
-        source = doc.metadata.get("source", "unknown")
-        page = doc.metadata.get("page", "unknown")
-        if page is None:
-            page = "unknown"
-        content = doc.page_content
-        results.append(f"Source: {source} - Page: {page}\nContent: {content}")
-
-    return "\n\n".join(results)
+    return "\n\n".join([f"{doc.page_content}\nMetadata: {doc.metadata}" for doc in docs])
