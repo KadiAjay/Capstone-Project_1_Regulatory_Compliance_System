@@ -21,7 +21,7 @@ def fts_search_tool(query: str) -> str:
 
 
 
-def fts_search(query: str, k: int = 5, collection_name: str = "hr_support_desk"):
+def fts_search(query: str, k: int = 5, collection_name: str = "regulatory-compilance"):
 
     sql =  """
        SELECT

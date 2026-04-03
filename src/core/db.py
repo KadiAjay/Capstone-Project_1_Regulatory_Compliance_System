@@ -4,9 +4,18 @@ from langchain_postgres import PGVector
 from langchain_openai import ChatOpenAI
 from langchain_openai import OpenAIEmbeddings
 
-load_dotenv()
 
+load_dotenv()
 PG_CONNECTION = os.getenv("PG_CONNECTION_STRING")
+
+from langchain_openai import OpenAIEmbeddings,ChatOpenAI
+
+# def get_embeddings():
+#     return GoogleGenerativeAIEmbeddings(
+#         model=os.getenv("GOOGLE_EMBEDDINGS_MODEl"),  # ✅ 1536 dimensions
+#         api_key=os.getenv("GOOGLE_API_KEY"),
+#         output_dimensionality=1536
+#     )
 
 def get_embeddings():
     return OpenAIEmbeddings(
