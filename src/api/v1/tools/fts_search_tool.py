@@ -25,12 +25,12 @@ def fts_search(query: str, k: int = 5, collection_name: str = "hr_support_desk")
 
     sql =  """
        SELECT
-           e.document                                               AS content,
-           e.cmetadata                                              AS metadata,
+           e.document AS content,
+           e.cmetadata AS metadata,
            ts_rank(
                to_tsvector('english', e.document),
                plainto_tsquery('english', %(query)s)
-           )                                                        AS fts_rank
+           ) AS fts_rank
        FROM  langchain_pg_embedding  e
        JOIN  langchain_pg_collection c ON c.uuid = e.collection_id
        WHERE c.name = %(collection)s

@@ -2,9 +2,19 @@ from langchain_core.tools import tool
 from src.core.db import get_vector_store
 from src.api.v1.tools.fts_search_tool import fts_search
 
-# keep your _hybrid_search function unchanged
 
-# hybrid search
+@tool
+def hybrid_search_tool(query: str) -> str:
+    """Use for complex queries requiring both semantic and keyword understanding."""
+
+    results = _hybrid_search(query)
+
+    if not results:
+        return "No hybrid results found."
+
+    return "\n\n".join([f"{doc['content']}\nMetadata: {doc['metadata']}" for doc in results])
+
+
 def _hybrid_search(query: str, k: int = 5) -> list[dict]:
    """
    Merge vector and FTS results using Reciprocal Rank Fusion (RRF).
@@ -18,10 +28,8 @@ def _hybrid_search(query: str, k: int = 5) -> list[dict]:
    vector_docs = vector_store.similarity_search(query, k=k)
    fts_docs    = fts_search(query, k=k)
 
-
    rrf_scores: dict[str, float] = {}
    chunk_map:  dict[str, dict]  = {}
-
 
    for rank, doc in enumerate(vector_docs):
        key = doc.page_content[:120]
@@ -40,16 +48,3 @@ def _hybrid_search(query: str, k: int = 5) -> list[dict]:
 
 
 
-
-
-
-@tool
-def hybrid_search_tool(query: str) -> str:
-    """Use for complex queries requiring both semantic and keyword understanding."""
-
-    results = _hybrid_search(query)
-
-    if not results:
-        return "No hybrid results found."
-
-    return "\n\n".join([f"{doc['content']}\nMetadata: {doc['metadata']}" for doc in results])

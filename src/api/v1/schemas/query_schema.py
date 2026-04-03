@@ -16,18 +16,14 @@ class QueryRequest(BaseModel):
         description="Filter by regulation type"
     )
 
-  
-
 
 class Citation(BaseModel):
     content: str
     metadata: Dict
 
 
-
-
 class QueryResponse(BaseModel):
     query: str
     answer:str
     raw_output:dict
-    # confidence_score: float
+    
